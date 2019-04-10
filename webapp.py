@@ -1,6 +1,7 @@
 from flask import Flask, redirect, url_for, session, request, jsonify
 from flask_oauthlib.client import OAuth
 from flask import render_template
+from flask import flash
 
 import pprint
 import os
@@ -69,6 +70,8 @@ def authorized():
 
 @app.route('/page1')
 def renderPage1():
+    flash("message")
+    print('hi')
     if 'user_data' in session:
         user_data_pprint = pprint.pformat(session['user_data'])#format the user data nicely
     else:
