@@ -3,50 +3,26 @@
 {% block title %}page1{% endblock %}
 
 {% block content %}
-  <h1>This is Page 1</h1>
 
-<p>User info .</p>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul class=flashes>
+            {% for message in messages %}
+                <div class="alert alert-success alert-dismissible">{{ message }}
+                      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                </div>
+            {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %} 
 
-<pre>
-{{ dump_user_data }}
-</pre>
+    <h1>This is Page 1</h1>
+
+    <p>User info .</p>
+
+    <pre>
+        {{ dump_user_data }}
+    </pre>
 
 {% endblock %}
 
-
-
-<<<<<<< HEAD
-
-
-=======
->>>>>>> 225a14fc2aaa256635a56bbf09d16ee6b49b323f
-{% with messages = get_flashed_messages() %} 
-
-
-  {% if messages %}
-
-
-    <ul class=flashes>
-
-
-    {% for message in messages %} 
-
-
-      <li>{{ message }}</li>
-
-
-    {% endfor %}
-
-
-    </ul>
-
-
-  {% endif %}
-
-<<<<<<< HEAD
-
-{% endwith %}
-
-
-=======
->>>>>>> 225a14fc2aaa256635a56bbf09d16ee6b49b323f

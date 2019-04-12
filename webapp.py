@@ -42,36 +42,40 @@ def home():
 
 @app.route('/login')
 def login():   
-    return github.authorize(callback=url_for('authorized', _external=True, _scheme='https'))
+    return github.authorize(callback=url_for('authorized', _external=True, _scheme='http'))
 
 @app.route('/logout')
 def logout():
     session.clear()
-    return render_template('message.html', message='You were logged out')
+    flash('You were successfully logged out')
+    return redirect(url_for("renderPage1"))
 
 @app.route('/login/authorized')#the route should match the callback URL registered with the OAuth provider
 def authorized():
     resp = github.authorized_response()
     if resp is None:
         session.clear()
-        message = 'Access denied: reason=' + request.args['error'] + ' error=' + request.args['error_description'] + ' full=' + pprint.pformat(request.args)      
+        
     else:
         try:
             #save user data and set log in message
             session['github_token'] = (resp['access_token'], '')#save token to prove user logged in
             session['user_data'] = github.get('user').data
-            message='You were successfully logged in as ' + session['user_data']['login']
+            flash('You were successfully logged in')
         except:
             #clear the session and give error message
             session.clear()
-            message='Unable tp login. Please try agin later.'
-    return render_template('message.html', message=message)
+            
+            
+    return redirect(url_for("renderPage1"))
 
 
 @app.route('/page1')
 def renderPage1():
-    flash("message")
+
+  
     print('hi')
+    #flash('You were successfully logged in')
     if 'user_data' in session:
         user_data_pprint = pprint.pformat(session['user_data'])#format the user data nicely
     else:
